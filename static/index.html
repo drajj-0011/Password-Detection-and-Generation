@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1020">
+<title>Password Lab — Strength Analysis & Secure Generation</title>
+<style>
+:root{--bg:#090d1b;--panel:#121a2e;--panel2:#17223a;--line:#2a3a5e;--text:#edf3ff;--muted:#9aa9c4;--mint:#61e6bd;--blue:#79a9ff;--purple:#ad8cff;--danger:#ff7185;--yellow:#ffd479;--shadow:0 24px 70px #05091580}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:radial-gradient(ellipse at 12% 4%,#344b8738 0,transparent 34%),radial-gradient(ellipse at 90% 16%,#6f4ba326 0,transparent 30%),radial-gradient(ellipse at 50% 100%,#1a68532b 0,transparent 38%),linear-gradient(145deg,#090d1b,#0b1222 50%,#0a1020);color:var(--text);font:15px/1.55 Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh;overflow-x:hidden}body:before{content:"";position:fixed;inset:0;pointer-events:none;opacity:.16;background-image:radial-gradient(#9db4e0 0.65px,transparent 0.65px);background-size:25px 25px;mask-image:linear-gradient(to bottom,black,transparent 85%)}button,input{font:inherit}button{cursor:pointer}.shell{position:relative;max-width:1160px;margin:auto;padding:28px 24px 64px}.nav{display:flex;align-items:center;justify-content:space-between;margin-bottom:58px}.brand{display:flex;align-items:center;gap:11px;font-weight:750;letter-spacing:-.03em}.brand-icon{width:42px;height:42px;border:1px solid #74dbc177;border-radius:14px;display:grid;place-items:center;background:linear-gradient(145deg,#1b3d4c,#17233b);color:var(--mint);box-shadow:0 0 28px #61e6bd20,inset 0 1px #ffffff20;animation:float 4s ease-in-out infinite}.brand-icon svg{width:21px}.nav-tag{color:#c0cdea;font-size:11px;letter-spacing:.1em;border:1px solid #53658a66;padding:8px 13px;border-radius:99px;background:#18223a8c;box-shadow:inset 0 1px #ffffff0b}.hero{position:relative;max-width:760px;margin-bottom:38px;animation:rise .7s both}.eyebrow{color:var(--mint);font-weight:700;font-size:11px;letter-spacing:.18em;text-transform:uppercase;display:flex;align-items:center;gap:9px}.eyebrow:before{content:"";width:24px;height:1px;background:linear-gradient(90deg,transparent,var(--mint))}.eyebrow:after{content:"";width:6px;height:6px;border-radius:50%;background:var(--mint);box-shadow:0 0 14px var(--mint)}h1{font-size:clamp(39px,6vw,68px);line-height:1.02;letter-spacing:-.06em;margin:17px 0 19px;max-width:820px}.gradient{background:linear-gradient(100deg,#f5f7ff 2%,#a9c6ff 48%,#76e9c6 90%);color:transparent;background-clip:text;filter:drop-shadow(0 0 24px #78e2c426)}.hero p{color:var(--muted);font-size:16px;max-width:680px;margin:0}.hero p strong{color:#e5edff;font-weight:600}.layout{display:grid;grid-template-columns:1.05fr .95fr;gap:19px;align-items:start}.card{position:relative;background:linear-gradient(145deg,#18233bd9,#10182af2 65%,#121c30f2);border:1px solid #43577b75;border-radius:22px;box-shadow:0 24px 70px #03071670,inset 0 1px #ffffff12;overflow:hidden;backdrop-filter:blur(14px);animation:rise .65s both;transition:transform .25s,border-color .25s,box-shadow .25s}.layout>.card{animation-delay:.08s}.right-col .generator{animation-delay:.16s}.right-col .learn{animation-delay:.24s}.card:before{content:"";position:absolute;inset:0 0 auto;height:1px;background:linear-gradient(90deg,transparent,#a8c4ff70,#61e6bd55,transparent);pointer-events:none}.card:hover{transform:translateY(-3px);border-color:#6683b277;box-shadow:0 30px 76px #03071680,inset 0 1px #ffffff17}.card-head{padding:23px 24px 0;display:flex;justify-content:space-between;align-items:flex-start;gap:12px}.card-head h2{font-size:17px;margin:0 0 4px;letter-spacing:-.02em}.sub{font-size:12px;color:var(--muted);margin:0}.step{font-size:10px;letter-spacing:.1em;color:#a8bcde;border:1px solid #53688b7a;padding:6px 10px;border-radius:99px;white-space:nowrap;background:#1b2941a6;box-shadow:inset 0 1px #ffffff0c}.card-body{padding:21px 24px 24px}.field-label{display:flex;justify-content:space-between;align-items:center;font-size:12px;color:#c6d2e8;margin-bottom:9px}.field-wrap{position:relative}.field-wrap input{width:100%;height:53px;border:1px solid #3c5277;background:linear-gradient(135deg,#0a1222,#101a2c);color:var(--text);border-radius:13px;padding:0 50px 0 15px;outline:none;transition:.25s;box-shadow:inset 0 2px 8px #0003}.field-wrap input:focus{border-color:#72cdb9;box-shadow:0 0 0 4px #61e6bd18,0 0 25px #61e6bd12}.field-wrap input::placeholder{color:#7484a1}.icon-btn{position:absolute;right:8px;top:8px;width:36px;height:36px;border:0;border-radius:10px;background:transparent;color:#9eb0ce;display:grid;place-items:center;transition:.2s}.icon-btn:hover{background:#202c45;color:white;transform:scale(1.05)}.icon-btn svg{width:18px;height:18px}.meter{margin-top:18px}.meter-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:9px}.meter-caption{font-size:12px;color:var(--muted)}.score-label{font-weight:700;font-size:12px;color:var(--mint);transition:color .2s}.bars{display:grid;grid-template-columns:repeat(5,1fr);gap:7px}.bar{height:6px;border-radius:99px;background:linear-gradient(90deg,#29364e,#34415a);transition:background .3s,box-shadow .3s,transform .3s}.bar.on{background:linear-gradient(90deg,var(--meter,#61e6bd),color-mix(in srgb,var(--meter,#61e6bd) 55%,white));box-shadow:0 0 14px color-mix(in srgb,var(--meter,#61e6bd) 55%,transparent);animation:barpop .35s both}.entropy-row{display:flex;justify-content:space-between;align-items:center;margin-top:14px;color:var(--muted);font-size:11px}.entropy-row strong{color:#b8d4ff;font-size:12px}.entropy-track{height:4px;border-radius:99px;background:#29364e;margin-top:7px;overflow:hidden}.entropy-track i{display:block;width:0;height:100%;border-radius:99px;background:linear-gradient(90deg,var(--purple),var(--blue),var(--mint));box-shadow:0 0 12px #79a9ff66;transition:width .35s}.entropy-note{margin:7px 0 0;color:#7788a5;font-size:10px;line-height:1.4}.checks{margin:20px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:11px}.check{display:flex;align-items:center;gap:8px;color:#8998b2;font-size:12px;transition:.2s}.check .dot{width:19px;height:19px;flex:none;border:1px solid #43516a;border-radius:50%;display:grid;place-items:center;font-size:10px;color:transparent;transition:.2s}.check.pass{color:#d3e7e0}.check.pass .dot{border-color:#48d2a6;background:#173c38;color:var(--mint);box-shadow:0 0 12px #61e6bd24}.divider{height:1px;background:linear-gradient(90deg,transparent,#33425d,transparent);margin:24px 0 17px}.why-row{display:flex;align-items:flex-start;gap:10px;font-size:12px;color:var(--muted);line-height:1.6}.bulb{color:var(--yellow);font-size:16px;text-shadow:0 0 12px #ffd47970}.right-col{display:grid;gap:19px}.generator .card-body{padding-top:18px}.gen-controls{display:grid;grid-template-columns:1fr 1fr;gap:13px;margin-bottom:15px}.control label{display:flex;justify-content:space-between;color:#c6d2e8;font-size:12px;margin-bottom:8px}.control label span{color:var(--mint);font-weight:700}.range{width:100%;accent-color:var(--mint);height:5px;cursor:pointer}.toggle-list{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:17px}.toggle{border:1px solid #40516e;background:linear-gradient(145deg,#141f33,#101827);color:#a9b7ce;border-radius:9px;padding:7px 10px;font-size:11px;transition:.2s}.toggle:hover{border-color:#7184a8;transform:translateY(-1px)}.toggle.active{border-color:#397b70;background:linear-gradient(145deg,#183d38,#15302f);color:#9af2d6;box-shadow:0 0 14px #61e6bd12,inset 0 1px #ffffff0c}.toggle .tick{color:var(--mint);margin-right:5px}.output{position:relative;background:linear-gradient(120deg,#0a1221,#101a2c);border:1px solid #3a4d6e;border-radius:13px;min-height:57px;display:flex;align-items:center;padding:10px 49px 10px 14px;word-break:break-all;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:14px;letter-spacing:.025em;color:#e9f2ff;box-shadow:inset 0 2px 8px #0003}.output.empty{color:#7d8ba3;font-family:inherit;letter-spacing:0}.copy-btn{position:absolute;right:8px;top:9px;height:36px;width:36px;border:1px solid #3b4d6b;background:#1b2941;color:#c3d1e8;border-radius:10px;display:grid;place-items:center;transition:.2s}.copy-btn:hover{border-color:#5faaa0;color:var(--mint);transform:scale(1.05)}.copy-btn svg{width:16px}.primary{width:100%;border:1px solid #a6ffe133;border-radius:11px;height:46px;margin-top:13px;background:linear-gradient(105deg,#69e0ba,#8dd5cb 52%,#86c8ff);color:#081820;font-weight:750;box-shadow:0 8px 25px #47caaa26,inset 0 1px #ffffff90;transition:.22s}.primary:hover{transform:translateY(-2px);filter:brightness(1.08);box-shadow:0 12px 30px #47caaa3b,inset 0 1px #ffffff90}.primary:active{transform:translateY(0)}.explain{display:flex;gap:11px;padding:13px 14px;background:linear-gradient(110deg,#153231,#132831);border:1px solid #32615c;border-radius:12px;margin-top:14px;color:#c1ded7;font-size:12px;line-height:1.55;box-shadow:inset 0 1px #ffffff0b}.shield{font-size:16px;color:var(--mint);flex:none;text-shadow:0 0 12px #61e6bd66}.learn .card-body{padding-top:15px}.outcomes{display:grid;grid-template-columns:1fr 1fr;gap:10px}.outcome{border:1px solid #334361;background:linear-gradient(145deg,#152139,#111a2c);border-radius:12px;padding:12px 13px;display:flex;gap:10px;align-items:flex-start;transition:.22s}.outcome:hover{transform:translateY(-2px);border-color:#627ba2;background:linear-gradient(145deg,#192845,#142039)}.outcome-icon{width:27px;height:27px;border:1px solid #88aaff24;border-radius:9px;background:linear-gradient(145deg,#243d64,#1c3150);color:#a8c7ff;display:grid;place-items:center;font-size:13px;flex:none;box-shadow:0 4px 12px #0002}.outcome strong{display:block;font-size:11px;color:#e2ebfa;margin:0 0 3px}.outcome span{display:block;font-size:10px;color:#9aa9c2;line-height:1.45}.footer{margin-top:24px;text-align:center;color:#8795ae;font-size:11px}.footer span{color:#c3d0e5}.toast{position:fixed;bottom:22px;left:50%;transform:translate(-50%,15px);opacity:0;pointer-events:none;background:linear-gradient(100deg,#dcfff1,#d9f8ff);color:#0d2b24;padding:11px 17px;border-radius:12px;font-size:13px;font-weight:700;box-shadow:0 12px 30px #0005;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}@keyframes barpop{from{transform:scaleX(.75);opacity:.55}to{transform:scaleX(1);opacity:1}}@media(prefers-reduced-motion:reduce){*,*:before,*:after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}@media(max-width:760px){.shell{padding:20px 15px 42px}.nav{margin-bottom:40px}.layout{grid-template-columns:1fr}.hero{margin-bottom:25px}.hero p{font-size:14px}.card-head{padding:19px 19px 0}.card-body{padding:18px 19px 20px}}@media(max-width:420px){.checks{grid-template-columns:1fr}.outcomes{grid-template-columns:1fr}.gen-controls{gap:10px}.nav-tag{font-size:9px;letter-spacing:.06em}.step{display:none}}
+</style>
+</head>
+<body>
+<div class="shell">
+<header class="nav"><div class="brand"><div class="brand-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 10V7a6 6 0 0 1 12 0v3"/><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M12 14v3"/></svg></div><span>Password Lab</span></div><div class="nav-tag">MICROPROJECT&nbsp; · &nbsp;PYTHON SECURITY</div></header>
+<section class="hero"><div class="eyebrow">Password security, made simple</div><h1><span class="gradient">Think stronger.</span><br>Stay safer online.</h1><p>Explore what makes a password resilient. <strong>Analyze strength in real time, generate a secure password,</strong> and learn why length and unpredictability matter.</p></section>
+<main class="layout"><section class="card"><div class="card-head"><div><h2>Analyze a password</h2><p class="sub">Analyzed by the Python server running on your own machine.</p></div><span class="step">01 / ANALYZE</span></div><div class="card-body"><label class="field-label" for="password"><span>Enter a password to test</span><span id="lengthLabel">0 characters</span></label><div class="field-wrap"><input id="password" type="password" autocomplete="off" placeholder="Try a password…" aria-label="Password to analyze"><button class="icon-btn" id="visibility" aria-label="Show password" title="Show password"><svg id="eyeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></svg></button></div><div class="meter"><div class="meter-top"><span class="meter-caption">Strength estimate</span><span class="score-label" id="scoreLabel">Waiting for input</span></div><div class="bars" id="bars"><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i><i class="bar"></i></div><div class="entropy-row"><span>Estimated entropy</span><strong id="entropyValue">— bits</strong></div><div class="entropy-track"><i id="entropyFill"></i></div><p class="entropy-note" id="entropyNote">Entropy estimates the search space; it is not a guarantee of real-world security.</p></div><div class="checks" id="checks"><div class="check" data-rule="length"><span class="dot">✓</span>At least 12 characters</div><div class="check" data-rule="upper"><span class="dot">✓</span>Uppercase letter (A–Z)</div><div class="check" data-rule="lower"><span class="dot">✓</span>Lowercase letter (a–z)</div><div class="check" data-rule="number"><span class="dot">✓</span>Number (0–9)</div><div class="check" data-rule="special"><span class="dot">✓</span>Special character</div><div class="check" data-rule="unique"><span class="dot">✓</span>Avoids common patterns</div></div><div class="divider"></div><div class="why-row"><span class="bulb">✦</span><span id="analysisHint">A longer, varied password is generally harder to guess. Type above to see which characteristics your password has.</span></div></div></section>
+<div class="right-col"><section class="card generator"><div class="card-head"><div><h2>Generate a stronger password</h2><p class="sub">Create a random password to use as a starting point.</p></div><span class="step">02 / GENERATE</span></div><div class="card-body"><div class="gen-controls"><div class="control"><label for="length"><span>Password length</span><span id="rangeValue">20</span></label><input class="range" id="length" type="range" min="12" max="32" value="20"></div><div class="control"><label><span>Security level</span><span>Strong</span></label><div style="color:#8191ab;font-size:11px;padding-top:3px">Long + mixed character sets</div></div></div><div class="toggle-list"><button class="toggle active" data-set="upper"><span class="tick">✓</span>Uppercase</button><button class="toggle active" data-set="lower"><span class="tick">✓</span>Lowercase</button><button class="toggle active" data-set="number"><span class="tick">✓</span>Numbers</button><button class="toggle active" data-set="special"><span class="tick">✓</span>Symbols</button></div><div class="output empty" id="output"><span id="generated">Your password will appear here</span><button class="copy-btn" id="copy" aria-label="Copy password" title="Copy password"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h3"/></svg></button></div><button class="primary" id="generate">✦ &nbsp; Generate secure password</button><div class="explain"><span class="shield">◈</span><span id="explanation">A randomly generated mix is less predictable than personal details or familiar words, making guessing more difficult.</span></div></div></section>
+<section class="card learn"><div class="card-head"><div><h2>What you’ll learn</h2><p class="sub">Project outcomes</p></div><span class="step">03 / LEARN</span></div><div class="card-body"><div class="outcomes"><div class="outcome"><div class="outcome-icon">⌁</div><div><strong>Spot weak patterns</strong><span>Recognize common, predictable password traits.</span></div></div><div class="outcome"><div class="outcome-icon">▤</div><div><strong>Check strength</strong><span>Evaluate length and character variety.</span></div></div><div class="outcome"><div class="outcome-icon">✳</div><div><strong>Generate randomly</strong><span>Build passwords with Python-ready logic.</span></div></div><div class="outcome"><div class="outcome-icon">↗</div><div><strong>Understand why</strong><span>See how length and variety help resist guessing.</span></div></div></div></div></section></div></main>
+<div class="footer">A learning demo — <span>never enter a password you currently use.</span> Real security also depends on unique passwords and a password manager.</div></div><div class="toast" id="toast">Copied to clipboard</div>
+<script>
+const $ = id => document.getElementById(id);
+const input = $('password'), bars = [...document.querySelectorAll('.bar')];
+const NO_SERVER = 'Could not reach the Python server. Start it with "python app.py" and reload this page.';
+
+async function api(path, body) {
+  const res = await fetch(path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body)
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.error || 'Request failed');
+  return data;
+}
+
+const colors = ['#ff7185', '#ff8c79', '#ffd479', '#b8db77', '#61e6bd'];
+
+function render(r) {
+  $('lengthLabel').textContent = r.length + ' ' + (r.length === 1 ? 'character' : 'characters');
+  $('scoreLabel').textContent = r.label;
+  $('analysisHint').textContent = r.hint;
+  $('entropyValue').textContent = r.length ? r.entropy + ' bits' : '— bits';
+  $('entropyFill').style.width = Math.min(100, r.entropy / 128 * 100) + '%';
+  $('entropyNote').textContent = r.length
+    ? `Estimated from ${r.length} characters and a ${r.pool}-character pool; actual predictability depends on how the password was chosen.`
+    : 'Entropy estimates the search space; it is not a guarantee of real-world security.';
+  document.querySelectorAll('.check').forEach(el =>
+    el.classList.toggle('pass', !!r.checks[el.dataset.rule]));
+  bars.forEach((b, i) => {
+    b.classList.toggle('on', i < r.score);
+    b.style.setProperty('--meter', colors[Math.max(0, Math.min(4, r.score - 1))]);
+  });
+}
+
+let requestId = 0, timer;
+async function analyze() {
+  const id = ++requestId;            
+  try {
+    const result = await api('/api/analyze', { password: input.value });
+    if (id === requestId) render(result);
+  } catch (e) {
+    if (id === requestId) $('analysisHint').textContent = NO_SERVER;
+  }
+}
+input.addEventListener('input', () => { clearTimeout(timer); timer = setTimeout(analyze, 120); });
+
+$('visibility').addEventListener('click', () => {
+  const show = input.type === 'password';
+  input.type = show ? 'text' : 'password';
+  $('visibility').setAttribute('aria-label', show ? 'Hide password' : 'Show password');
+});
+
+
+const range = $('length');
+range.addEventListener('input', () => $('rangeValue').textContent = range.value);
+
+const active = new Set(['upper', 'lower', 'number', 'special']);
+document.querySelectorAll('.toggle').forEach(btn => btn.addEventListener('click', () => {
+  const key = btn.dataset.set;
+  if (active.has(key)) {
+    if (active.size === 1) return;    
+    active.delete(key); btn.classList.remove('active'); btn.querySelector('.tick').textContent = '';
+  } else {
+    active.add(key); btn.classList.add('active'); btn.querySelector('.tick').textContent = '✓';
+  }
+}));
+
+$('generate').addEventListener('click', async () => {
+  try {
+    const r = await api('/api/generate', { length: Number(range.value), sets: [...active] });
+    $('output').classList.remove('empty');
+    $('generated').textContent = r.password;
+    $('explanation').textContent = `This ${r.length}-character password uses ${r.types} character types. It is created with Python's secrets module, which uses your operating system's cryptographic randomness, so the mix is unpredictable and harder to guess than common words or personal details.`;
+  } catch (e) {
+    $('explanation').textContent = e.message === 'Failed to fetch' ? NO_SERVER : e.message;
+  }
+});
+
+$('copy').addEventListener('click', async () => {
+  const text = $('generated').textContent;
+  if (!text || $('output').classList.contains('empty')) return;
+  try {
+    await navigator.clipboard.writeText(text);
+    const toast = $('toast');
+    toast.classList.add('show');
+    setTimeout(() => toast.classList.remove('show'), 1600);
+  } catch (e) {
+    const toast = $('toast');
+    toast.textContent = 'Clipboard unavailable — select and copy it manually';
+    toast.classList.add('show');
+    setTimeout(() => { toast.classList.remove('show'); toast.textContent = 'Copied to clipboard'; }, 2400);
+  }
+});
+</script>
+</body>
+</html>
