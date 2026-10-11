@@ -20,7 +20,7 @@ The project aims to help users understand password security and create stronger 
 - Flask
 - HTML
 - CSS
-- JavaScript (if used in the project)
+- JavaScript
 
 ## Project Structure
 
